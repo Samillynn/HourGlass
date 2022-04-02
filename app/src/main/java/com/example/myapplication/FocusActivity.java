@@ -56,7 +56,6 @@ class FocusLifeCycleObserver implements DefaultLifecycleObserver{
     private Lifecycle lifecycle;
 
     public FocusLifeCycleObserver(Context _context, Lifecycle lifecycle) {
-//        disable();
         usingWhiteListApp = false;
         context = _context;
         systemButtonBR = new SystemButtonBR(this::restartFocus);
@@ -79,14 +78,9 @@ class FocusLifeCycleObserver implements DefaultLifecycleObserver{
 
         // if the pending intent does not work
         // especially when home is pressed
-
         if(!lifecycle.getCurrentState().isAtLeast(Lifecycle.State.RESUMED)) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             context.startActivity(restartFocus);
+            Log.i("LifeCycle", "Retry Restarting Focus");
         }
 
         Log.i("Lifecycle", "Focus Restarted");

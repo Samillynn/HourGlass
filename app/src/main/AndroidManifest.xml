@@ -26,11 +26,6 @@
             android:exported="false" />
         <activity android:name=".WhiteListChooserActivity"/>
 
-        <service android:name=".CountDownService" />
-
-        <receiver
-            android:name=".CountDownBR"
-            android:enabled="true" />
         <receiver android:name=".SystemButtonBR" />
     </application>
 

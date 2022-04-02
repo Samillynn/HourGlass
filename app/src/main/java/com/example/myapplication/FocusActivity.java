@@ -14,6 +14,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 public class FocusActivity extends AppCompatActivity {
@@ -35,24 +36,13 @@ public class FocusActivity extends AppCompatActivity {
             finish();
         });
 
-        makeAppButton("cn.wps.moffice_eng", findViewById(R.id.image_button1));
-        makeAppButton("com.duapps.recorder", findViewById(R.id.image_button2));
-        makeAppButton("com.miui.weather2", findViewById(R.id.image_button3));
-
-    }
-
-    private void makeAppButton(String packageName, ImageButton imageButton) {
-        Intent app = getPackageManager().getLaunchIntentForPackage(packageName);
-        imageButton.setOnClickListener(view -> {
+        ((Button)findViewById(R.id.whitelist)).setOnClickListener(view -> {
             lifecycleObserver.setUsingWhiteListApp(true);
-            startActivity(app);
+            startActivity(new Intent(this, WhitelistActivity.class));
         });
-        try {
-            imageButton.setBackground(getPackageManager().getApplicationIcon(packageName));
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+
     }
+
 
     @Override
     public void onBackPressed() {}

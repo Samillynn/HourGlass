@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TestActivity"
+            android:exported="false" />
+        <activity
             android:name=".WhitelistActivity"
             android:exported="false" />
         <activity
@@ -24,7 +30,8 @@
         <activity
             android:name=".FocusActivity"
             android:exported="false" />
-        <activity android:name=".WhiteListChooserActivity"/>
+        <activity android:name=".WhiteListChooserActivity" />
+        <activity android:name=".CustomiseMes"/>
 
         <receiver android:name=".SystemButtonBR" />
     </application>

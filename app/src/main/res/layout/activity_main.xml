@@ -79,7 +79,7 @@
         android:layout_height="150dp"
         android:background="@color/white"
         android:src="@drawable/custom_button"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <ImageButton
@@ -91,8 +91,17 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <ImageButton
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@color/white"
+        android:src="@drawable/custom_button"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
     <TextView
-        android:id="@+id/textViewStart"
+        android:id="@+id/bottom_button_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

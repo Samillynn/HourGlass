@@ -34,6 +34,7 @@
         <activity android:name=".CustomiseMes"/>
 
         <receiver android:name=".SystemButtonBR" />
+        <receiver android:name=".ReminderBroadcast" />
     </application>
 
 </manifest>

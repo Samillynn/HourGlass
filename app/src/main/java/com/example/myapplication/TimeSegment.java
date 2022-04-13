@@ -22,6 +22,7 @@ public class TimeSegment extends ConstraintLayout {
 
     public TimeSegment(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        //Instantiating layout from xml file time_segment
         LayoutInflater.from(context).inflate(R.layout.time_segment, this);
         TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs, R.styleable.TimeSegment, 0, 0);
@@ -35,14 +36,17 @@ public class TimeSegment extends ConstraintLayout {
     }
 
     void initViews() {
+        //Getting references from time_segment xml file
         minutesView = findViewById(R.id.textViewMin);
         secondsView = findViewById(R.id.textViewSec);
+        //Setting default values
         setMinutes(0);
         setSeconds(0);
-
+        //Adding a colon between the mins and secs
         colonView = findViewById(R.id.textViewColon);
     }
 
+    //Setting the looks
     void initAttributes(TypedArray a) {
         textSize = a.getDimension(R.styleable.TimeSegment_android_textSize, 16);
         timeBackground = a.getDrawable(R.styleable.TimeSegment_ts_time_background);
@@ -60,11 +64,13 @@ public class TimeSegment extends ConstraintLayout {
         colonView.setTextSize(textSize);
     }
 
+    //Setting time (overall)
     void setTimeInSecs(int seconds) {
         setMinutes(seconds/60);
         setSeconds(seconds%60);
     }
 
+    //Setting minutes
     void setMinutes(int minutes) {
         String minuteText = String.valueOf(minutes);
         if (minuteText.length() < 2)
@@ -72,6 +78,7 @@ public class TimeSegment extends ConstraintLayout {
         minutesView.setText(minuteText);
     }
 
+    //Setting seconds
     void setSeconds(int seconds) {
         String secondsText = String.valueOf(seconds);
         if (secondsText.length() < 2)

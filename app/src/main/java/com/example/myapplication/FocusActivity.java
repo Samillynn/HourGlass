@@ -30,34 +30,40 @@ public class FocusActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_focus);
 
-
+        //Linking the buttons
         mExitButton = findViewById(R.id.exit_button);
         mOpenAppsButton = findViewById(R.id.open_app);
         mMotivation = findViewById(R.id.motivation);
-
+        
+        //Setting an observer for lifecycle to monitor the stage the activity is currently in
         getLifecycle().addObserver(new LifecycleLogger("Lifecycle", "FocusActivity"));
 
         lifecycleObserver = new FocusLifeCycleObserver(this);
         getLifecycle().addObserver(lifecycleObserver);
         lifecycleObserver.enable();
 
+        //Close button for timer (obsolete now)
         mExitButton.setOnClickListener(view -> {
             exit();
         });
 
+        //Opening the whitelist apps on click
         mOpenAppsButton.setOnClickListener(view -> {
             lifecycleObserver.setUsingWhiteListApp(true);
             startActivity(new Intent(this, WhitelistActivity.class));
         });
-
+        
+        //Instantiating timer, observing the change in time and starting it
         timeSegment = findViewById(R.id.time_segment);
         timerViewModel = new ViewModelProvider(this).get(TimerViewModel.class);
         timerViewModel.getLeftTimeSecs().observe(this, t -> timeSegment.setTimeInSecs(t));
         startTimer();
     }
-
+    
+    //Starting timer countdown
     void startTimer() {
         timer = new Timer();
+        //Retrieving time from settings
         timer.setTotalTimeInSec(SettingData.getInstance().getFocusTimeSecs());
         timer.setOnTick(t -> {
             timerViewModel.getLeftTimeSecs().setValue(t);
@@ -66,7 +72,8 @@ public class FocusActivity extends AppCompatActivity {
         timer.setOnFinish(this::exit);
         timer.start();
     }
-
+    
+    //Method to close timer
     void exit() {
         lifecycleObserver.disable();
         setResult(RESULT_OK);

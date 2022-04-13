@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -26,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView settingButton;
     private Timer timer = new Timer();
     private ImageButton bottomButton;
-    private TimerViewModel timerViewModel;
+    private TimeViewModel timeViewModel;
     private TimeSegment timeSegment;
     private CircularSeekBar circularSeekBar;
 
@@ -36,16 +35,16 @@ public class MainActivity extends AppCompatActivity {
         getLifecycle().addObserver(new LifecycleLogger("Lifecycle", getClass().getName()));
 
         setContentView(R.layout.activity_main);
-        SettingData.getInstance().initialize(this);
+        SharedData.getInstance().initialize(this);
         initActionBar();
         initViews();
 
-        timerViewModel = new ViewModelProvider(this).get(TimerViewModel.class);
-        timerViewModel.getTotalTimeSecs().observe(this, totalTime -> {
+        timeViewModel = new ViewModelProvider(this).get(TimeViewModel.class);
+        timeViewModel.getTotalTimeSecs().observe(this, totalTime -> {
             circularSeekBar.setMax(totalTime);
         });
 
-        timerViewModel.getLeftTimeSecs().observe(this, leftTimeSecs -> {
+        timeViewModel.getLeftTimeSecs().observe(this, leftTimeSecs -> {
             circularSeekBar.setProgress(leftTimeSecs);
             timeSegment.setTimeInSecs(leftTimeSecs);
         });
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(CircularSeekBar circularSeekBar, float progress, boolean fromUser) {
                 if (fromUser) {
-                    timerViewModel.getLeftTimeSecs().setValue((int) progress);
+                    timeViewModel.getLeftTimeSecs().setValue((int) progress);
                 }
             }
 
@@ -63,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onStartTrackingTouch(CircularSeekBar seekBar) {}
         });
-        changeState(new WaitRestState(this, timerViewModel));
+        changeState(new WaitRestState(this, timeViewModel));
     }
 
 
@@ -87,14 +86,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void startFocus() {
         timer.clear();
-        SettingData.getInstance().setFocusTimeSecs(timerViewModel.getLeftTimeSecs().getValue());
+        SharedData.getInstance().setFocusTimeSecs(timeViewModel.getLeftTimeSecs().getValue());
         startActivityForResult(new Intent(this, FocusActivity.class), 0);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        changeState(new WaitRestState(this, timerViewModel));
+        changeState(new WaitRestState(this, timeViewModel));
     }
 
     public void changeState(HomepageState state) {
@@ -112,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
 class WaitRestState extends HomepageState {
 
-    WaitRestState(MainActivity activity, TimerViewModel model) {
+    WaitRestState(MainActivity activity, TimeViewModel model) {
         super(activity, model);
     }
 
@@ -145,14 +144,14 @@ class WaitRestState extends HomepageState {
     void changeSeekbar(CircularSeekBar seekBar) {
         seekBar.setDisablePointer(false);
         model.getTotalTimeSecs().setValue(90 * 60);
-        model.getLeftTimeSecs().setValue(SettingData.getInstance().getDefaultRestTimeSecs());
+        model.getLeftTimeSecs().setValue(SharedData.getInstance().getDefaultRestTimeSecs());
     }
 }
 
 class RestState extends HomepageState {
 
 
-    RestState(MainActivity activity, TimerViewModel model) {
+    RestState(MainActivity activity, TimeViewModel model) {
         super(activity, model);
     }
 
@@ -187,8 +186,9 @@ class RestState extends HomepageState {
 }
 
 class WaitFocusState extends HomepageState {
+    final int TIME_BEFORE_FORCE_FOCUS_SECS = 120;
 
-    WaitFocusState(MainActivity activity, TimerViewModel model) {
+    WaitFocusState(MainActivity activity, TimeViewModel model) {
         super(activity, model);
     }
 
@@ -214,16 +214,14 @@ class WaitFocusState extends HomepageState {
 
     @Override
     void changeTimer(Timer timer) {
-        timer.setTotalTimeInSec(60);
+        int snoozeTimeSecs = SharedData.getInstance().getDefaultSnoozeTimeSecs();
+        timer.setTotalTimeInSec(snoozeTimeSecs + TIME_BEFORE_FORCE_FOCUS_SECS);
         timer.setOnTick(t -> {
-
-            if (t == 30) {
+            if (t == TIME_BEFORE_FORCE_FOCUS_SECS) {
                 activity.sendBroadcast(new Intent(activity, ReminderBroadcast.class));
-                Log.i("Notification", "Sent");
             }
             if (t == 0) {
                 activity.startActivity(new Intent(activity, FocusActivity.class));
-                Log.i("Notification", "Sent");
             }
         });
     }
@@ -232,15 +230,15 @@ class WaitFocusState extends HomepageState {
     void changeSeekbar(CircularSeekBar seekBar) {
         seekBar.setDisablePointer(false);
         model.getTotalTimeSecs().setValue(90 * 60);
-        model.getLeftTimeSecs().setValue(SettingData.getInstance().getDefaultFocusTimeSecs());
+        model.getLeftTimeSecs().setValue(SharedData.getInstance().getDefaultFocusTimeSecs());
     }
 }
 
 abstract class HomepageState {
     MainActivity activity;
-    TimerViewModel model;
+    TimeViewModel model;
 
-    HomepageState(MainActivity activity, TimerViewModel model) {
+    HomepageState(MainActivity activity, TimeViewModel model) {
         this.model = model;
         this.activity = activity;
     }

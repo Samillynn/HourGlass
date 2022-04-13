@@ -3,7 +3,6 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import android.widget.Toast;
 
 import com.google.android.flexbox.FlexboxLayout;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class WhitelistActivity extends AppCompatActivity {
@@ -21,7 +19,7 @@ public class WhitelistActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_whitelist);
-        Set<String> whitelistPackageNames = SettingData.getInstance().getWhitelistPackages();
+        Set<String> whitelistPackageNames = SharedData.getInstance().getWhitelistPackages();
 
         int imageButtonId = 0;
         for(String packageName: whitelistPackageNames) {

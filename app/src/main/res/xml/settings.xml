@@ -33,6 +33,5 @@
             android:dialogMessage="@string/motivational_msg_summary"
             android:inputType="textMultiLine"
             android:summary="@string/motivational_msg_summary"
-            android:key="motivational_msg" />
-    </PreferenceCategory>
+            android:key="motivational_msg"/> </PreferenceCategory>
 </PreferenceScreen>

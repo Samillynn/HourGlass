@@ -29,14 +29,14 @@ public class WhiteListChooserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_white_list_chooser);
 
-        Set<String> whitelistPackageNames = SettingData.getInstance().getWhitelistPackages();
+        Set<String> whitelistPackageNames = SharedData.getInstance().getWhitelistPackages();
         AppInfoAdapter appInfoAdapter = new AppInfoAdapter(getInstalledPackageNames(), whitelistPackageNames);
         ListView listView = findViewById(R.id.whitelist_chooser);
         listView.setAdapter(appInfoAdapter);
 
         Button saveActionButton = findViewById(R.id.save_action);
         saveActionButton.setOnClickListener(view -> {
-            SettingData.getInstance().setWhitelistPackages(appInfoAdapter.whitelistedPackageNames);
+            SharedData.getInstance().setWhitelistPackages(appInfoAdapter.whitelistedPackageNames);
             finish();
         });
 

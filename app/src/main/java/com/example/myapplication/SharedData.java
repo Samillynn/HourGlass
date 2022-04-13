@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import java.util.HashSet;
 import java.util.Set;
 
-public class SettingData {
+public class SharedData {
     final static String SHARED_PREFERENCE = "com.example.myapplication";
     final static String MOTIVATION_MESSAGE = "motivation_message";
     final static String FOCUS_TIME_DEFAULT = "focus_time_default";
@@ -17,9 +17,9 @@ public class SettingData {
 
     SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
-    private static SettingData singletonInstance;
+    private static SharedData singletonInstance;
 
-    private SettingData() {}
+    private SharedData() {}
 
     public void initialize(Context context) {
         sharedPreferences = context.getSharedPreferences(
@@ -27,9 +27,9 @@ public class SettingData {
         editor = sharedPreferences.edit();
     }
 
-    static public SettingData getInstance() {
+    static public SharedData getInstance() {
         if (singletonInstance == null) {
-            singletonInstance = new SettingData();
+            singletonInstance = new SharedData();
         }
         return singletonInstance;
     }

@@ -14,6 +14,7 @@ public class ReminderBroadcast extends BroadcastReceiver{
     public void onReceive(android.content.Context context, Intent intent) {
         //to go back to app after clicking on notification
         Intent notificationIntent = new Intent(context, MainActivity.class);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent contentIntent = PendingIntent.getActivity(context,
                 0, notificationIntent,
                 PendingIntent.FLAG_CANCEL_CURRENT);
@@ -23,8 +24,9 @@ public class ReminderBroadcast extends BroadcastReceiver{
                 .setAutoCancel(true) //for going back to app
                 .setContentIntent(contentIntent) //for going back to app
                 .setContentTitle("Reminder")
-                .setContentText("Time to get back to work!")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                .setContentText("Time to get back to work! " + SharedData.getInstance().getMotivationMessage())
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setPriority(NotificationCompat.PRIORITY_MAX);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 

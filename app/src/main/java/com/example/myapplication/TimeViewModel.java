@@ -3,7 +3,7 @@ package com.example.myapplication;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class TimerViewModel extends ViewModel {
+public class TimeViewModel extends ViewModel {
     private final MutableLiveData<Integer> totalTimeSecs = new MutableLiveData<>();
     private final MutableLiveData<Integer> leftTimeSecs = new MutableLiveData<>();
 

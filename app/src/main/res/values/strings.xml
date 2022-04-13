@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Hourglass</string>
 
     <!-- used in homepage -->
     <string name="start_rest">START REST</string>
@@ -19,11 +19,14 @@
     <string name="access_management_section_name">Access management</string>
     <string name="access_management_summary">Please whitelist the accessible apps during your focus time.</string>
     <string name="motivational_msg_section_name">Motivational message</string>
-    <string name="motivational_msg_summary">Please set a motivation for yourself.</string>
+    <string name="motivational_msg_summary">Please set a message for yourself.</string>
 
 
     <string name="motivational_msg_popup_ins">Customize motivational messages here.</string>
     <string name="cancel">CANCEL</string>
     <string name="ok">OK</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="focus_warning">Phone Locked \n Don\'t be a slave to your phone!</string>
     <!--    <string name="shared_preference">com.example.myapplication</string> -->
 </resources>

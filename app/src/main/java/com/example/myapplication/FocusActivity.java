@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
@@ -22,28 +23,36 @@ public class FocusActivity extends AppCompatActivity {
     private TextView mMotivation;
     private Button mExitButton;
     private Button mOpenAppsButton;
-    private TimerViewModel timerViewModel;
+    private TimeViewModel timeViewModel;
     private Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_focus);
-
+        setResult(RESULT_OK);
 
         mExitButton = findViewById(R.id.exit_button);
-        mOpenAppsButton = findViewById(R.id.open_app);
-        mMotivation = findViewById(R.id.motivation);
+        mExitButton.setOnClickListener(view -> new ExitFocusDialogFragment(result -> {
+            if (result) {
+                lifecycleObserver.disable();
+                finish();
+            }
+        }).show(getSupportFragmentManager(), "Exit Focus"));
 
-        getLifecycle().addObserver(new LifecycleLogger("Lifecycle", "FocusActivity"));
+        mOpenAppsButton = findViewById(R.id.open_app);        mOpenAppsButton.setOnClickListener(view -> {
+            lifecycleObserver.setUsingWhiteListApp(true);
+            startActivity(new Intent(this, WhitelistActivity.class));
+        });
+
+        mMotivation = findViewById(R.id.motivation);
+        mMotivation.setText(SharedData.getInstance().getMotivationMessage());
+
 
         lifecycleObserver = new FocusLifeCycleObserver(this);
         getLifecycle().addObserver(lifecycleObserver);
         lifecycleObserver.enable();
 
-        mExitButton.setOnClickListener(view -> {
-            exit();
-        });
 
         mOpenAppsButton.setOnClickListener(view -> {
             lifecycleObserver.setUsingWhiteListApp(true);
@@ -51,26 +60,23 @@ public class FocusActivity extends AppCompatActivity {
         });
 
         timeSegment = findViewById(R.id.time_segment);
-        timerViewModel = new ViewModelProvider(this).get(TimerViewModel.class);
-        timerViewModel.getLeftTimeSecs().observe(this, t -> timeSegment.setTimeInSecs(t));
+        timeViewModel = new ViewModelProvider(this).get(TimeViewModel.class);
+        timeViewModel.getLeftTimeSecs().observe(this, t -> timeSegment.setTimeInSecs(t));
         startTimer();
     }
 
     void startTimer() {
         timer = new Timer();
-        timer.setTotalTimeInSec(SettingData.getInstance().getFocusTimeSecs());
+        timer.setTotalTimeInSec(SharedData.getInstance().getFocusTimeSecs());
         timer.setOnTick(t -> {
-            timerViewModel.getLeftTimeSecs().setValue(t);
+            timeViewModel.getLeftTimeSecs().setValue(t);
             Log.i("TimeSegment", ""+t);
         });
-        timer.setOnFinish(this::exit);
+        timer.setOnFinish(() -> {
+                lifecycleObserver.disable();
+                finish();
+        });
         timer.start();
-    }
-
-    void exit() {
-        lifecycleObserver.disable();
-        setResult(RESULT_OK);
-        finish();
     }
 
 
@@ -135,6 +141,11 @@ class FocusLifeCycleObserver implements DefaultLifecycleObserver{
         this.usingWhiteListApp = usingWhiteListApp;
     }
 
+    @Override
+    public void onCreate(@NonNull LifecycleOwner owner) {
+        DefaultLifecycleObserver.super.onCreate(owner);
+        NotificationManagerCompat.from(context).cancelAll();
+    }
 
     @Override
     public void onResume(@NonNull LifecycleOwner owner) {

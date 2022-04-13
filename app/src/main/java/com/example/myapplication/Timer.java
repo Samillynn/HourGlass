@@ -17,7 +17,7 @@ public class Timer {
 
             @Override
             public void onTick(long l) {
-                Log.d("Timer", "onTick " + onTick);
+                Log.d("Timer", "onTick " + onTick + " " + l/1000);
                 if (l / 1000 != leftTimeInSec) {
                     leftTimeInSec = (int)l / 1000;
                     if(onTick != null) onTick.accept(leftTimeInSec);

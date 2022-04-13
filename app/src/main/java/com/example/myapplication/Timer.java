@@ -15,6 +15,7 @@ public class Timer {
     public void start() {
         countDownTimer = new CountDownTimer(totalTimeInSec * 1000L, 500) {
 
+            //Method for countdown sequence
             @Override
             public void onTick(long l) {
                 Log.d("Timer", "onTick " + onTick);
@@ -24,6 +25,7 @@ public class Timer {
                 }
             }
 
+            //Method when countdown ends
             @Override
             public void onFinish() {
                 if(onFinish != null) onFinish.run();
@@ -31,6 +33,7 @@ public class Timer {
         }.start();
     }
 
+    //Setting the time for timer
     public void setTotalTimeInSec(int totalTimeInSec1) {
         totalTimeInSec = totalTimeInSec1;
     }
@@ -38,6 +41,8 @@ public class Timer {
     public void cancel() {
         if (countDownTimer != null) countDownTimer.cancel();
     }
+    
+    //Resetting timer
     public void clear() {
         cancel();
         onTick = null;
@@ -45,6 +50,7 @@ public class Timer {
         leftTimeInSec = 0;
         totalTimeInSec = 0;
     }
+    
     public void setOnTick(IntConsumer callback) {
         onTick = callback;
     }

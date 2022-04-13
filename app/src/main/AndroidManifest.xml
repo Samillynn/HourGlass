@@ -13,9 +13,6 @@
             android:name=".SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".TestActivity"
-            android:exported="false" />
-        <activity
             android:name=".WhitelistActivity"
             android:exported="false" />
         <activity
@@ -29,9 +26,9 @@
         </activity>
         <activity
             android:name=".FocusActivity"
+            android:theme="@style/Theme.MyApplication.NoActionBar"
             android:exported="false" />
         <activity android:name=".WhiteListChooserActivity" />
-        <activity android:name=".CustomiseMes"/>
 
         <receiver android:name=".SystemButtonBR" />
         <receiver android:name=".ReminderBroadcast" />

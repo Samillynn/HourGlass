@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/default_time_section_name">
+        <com.example.myapplication.NumberPickerPreference
+            android:title="@string/settings_default_relax_time"
+            android:summary="@string/default_relax_time_summary"
+            android:key="relax_time"
+            android:icon="@drawable/relax_time_icon" />
+        <com.example.myapplication.NumberPickerPreference
+            android:title="@string/settings_default_focus_time"
+            android:summary="@string/default_focus_time_summary"
+            android:key="focus_time"
+            android:icon="@drawable/focus_time_icon" />
+        <com.example.myapplication.NumberPickerPreference
+            android:title="@string/settings_default_snooze_time"
+            android:summary="@string/default_snooze_time_summary"
+            android:key="snooze_time"
+            android:icon="@drawable/snooze_time_icon" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/access_management_section_name">
+        <Preference
+            android:title="@string/access_management_section_name"
+            android:summary="@string/access_management_summary"
+            android:key="access_management" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/motivational_msg_section_name">
+        <EditTextPreference
+            android:title="@string/motivational_msg_section_name"
+            android:dialogTitle="@string/motivational_msg_section_name"
+            android:dialogMessage="@string/motivational_msg_summary"
+            android:inputType="textMultiLine"
+            android:summary="@string/motivational_msg_summary"
+            android:key="motivational_msg" />
+    </PreferenceCategory>
+</PreferenceScreen>

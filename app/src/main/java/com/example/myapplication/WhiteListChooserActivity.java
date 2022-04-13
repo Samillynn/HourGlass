@@ -2,7 +2,6 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -24,25 +23,20 @@ import java.util.Set;
 
 public class WhiteListChooserActivity extends AppCompatActivity {
 
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor preferenceEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_white_list_chooser);
-        sharedPreferences = getSharedPreferences(MainActivity.sharedPreferencesFile, MODE_PRIVATE);
-        preferenceEditor = sharedPreferences.edit();
 
-        Set<String> whitelistPackageNames = sharedPreferences.getStringSet("whitelist", new HashSet<>());
+        Set<String> whitelistPackageNames = SettingData.getInstance().getWhitelistPackages();
         AppInfoAdapter appInfoAdapter = new AppInfoAdapter(getInstalledPackageNames(), whitelistPackageNames);
         ListView listView = findViewById(R.id.whitelist_chooser);
         listView.setAdapter(appInfoAdapter);
 
         Button saveActionButton = findViewById(R.id.save_action);
         saveActionButton.setOnClickListener(view -> {
-            preferenceEditor.putStringSet("whitelist", appInfoAdapter.whitelistedPackageNames);
-            preferenceEditor.apply();
+            SettingData.getInstance().setWhitelistPackages(appInfoAdapter.whitelistedPackageNames);
             finish();
         });
 

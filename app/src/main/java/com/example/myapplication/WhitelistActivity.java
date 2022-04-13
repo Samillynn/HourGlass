@@ -17,13 +17,11 @@ import java.util.Set;
 
 public class WhitelistActivity extends AppCompatActivity {
 
-    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_whitelist);
-        sharedPreferences = getSharedPreferences("com.example.myapplication", MODE_PRIVATE);
-        Set<String> whitelistPackageNames = sharedPreferences.getStringSet("whitelist", new HashSet<>());
+        Set<String> whitelistPackageNames = SettingData.getInstance().getWhitelistPackages();
 
         int imageButtonId = 0;
         for(String packageName: whitelistPackageNames) {

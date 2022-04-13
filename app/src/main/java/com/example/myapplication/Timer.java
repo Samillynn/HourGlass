@@ -1,6 +1,5 @@
 package com.example.myapplication;
 
-import android.content.Context;
 import android.os.CountDownTimer;
 import android.util.Log;
 
@@ -18,7 +17,7 @@ public class Timer {
 
             @Override
             public void onTick(long l) {
-                Log.d("Timer", "onTick");
+                Log.d("Timer", "onTick " + onTick);
                 if (l / 1000 != leftTimeInSec) {
                     leftTimeInSec = (int)l / 1000;
                     if(onTick != null) onTick.accept(leftTimeInSec);
@@ -37,12 +36,14 @@ public class Timer {
     }
 
     public void cancel() {
-        countDownTimer.cancel();
+        if (countDownTimer != null) countDownTimer.cancel();
     }
     public void clear() {
         cancel();
         onTick = null;
         onFinish = null;
+        leftTimeInSec = 0;
+        totalTimeInSec = 0;
     }
     public void setOnTick(IntConsumer callback) {
         onTick = callback;

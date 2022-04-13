@@ -1,45 +1,39 @@
 package com.example.myapplication;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.DefaultLifecycleObserver;
-import androidx.lifecycle.LifecycleOwner;
-
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.PowerManager;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.Locale;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.DefaultLifecycleObserver;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelProvider;
 
 public class FocusActivity extends AppCompatActivity {
     private FocusLifeCycleObserver lifecycleObserver;
-    private TextView mCountdown;
-    private CountDownTimer mCountDownTimer;
-    private EditText mTimerInput;
+    private TimeSegment timeSegment;
+    private TextView mMotivation;
     private Button mExitButton;
     private Button mOpenAppsButton;
-    public static boolean isTimerRunning;
-    private boolean timerRunning;
-    private long timeLeftinMillis;
+    private TimerViewModel timerViewModel;
+    private Timer timer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_focus);
-        Intent intent = getIntent();
-        mCountdown = findViewById(R.id.textViewCountdown);
-        timeLeftinMillis = intent.getIntExtra("Time", 0);
-        startTimer();
-        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#FF8FC0FF"));
+
+
+        mExitButton = findViewById(R.id.exit_button);
+        mOpenAppsButton = findViewById(R.id.open_app);
+        mMotivation = findViewById(R.id.motivation);
 
         getLifecycle().addObserver(new LifecycleLogger("Lifecycle", "FocusActivity"));
 
@@ -47,22 +41,8 @@ public class FocusActivity extends AppCompatActivity {
         getLifecycle().addObserver(lifecycleObserver);
         lifecycleObserver.enable();
 
-        mExitButton = findViewById(R.id.exit_button);
-        mOpenAppsButton = findViewById(R.id.open_app);
-
-        mExitButton.setBackgroundColor(Color.parseColor("#FFFFD27E"));
-        mExitButton.setTextColor(Color.parseColor("#FF000000"));
-        mOpenAppsButton.setBackgroundColor(Color.parseColor("#FFFFD27E"));
-        mOpenAppsButton.setTextColor(Color.parseColor("#FF000000"));
-
-        mExitButton.setVisibility(View.INVISIBLE);
         mExitButton.setOnClickListener(view -> {
-            lifecycleObserver.disable();
-            finish();
-
-
-            //mCountdown.setVisibility(View.INVISIBLE);
-
+            exit();
         });
 
         mOpenAppsButton.setOnClickListener(view -> {
@@ -70,53 +50,34 @@ public class FocusActivity extends AppCompatActivity {
             startActivity(new Intent(this, WhitelistActivity.class));
         });
 
-        findViewById(R.id.exit_button).setVisibility(View.VISIBLE);
+        timeSegment = findViewById(R.id.time_segment);
+        timerViewModel = new ViewModelProvider(this).get(TimerViewModel.class);
+        timerViewModel.getLeftTimeSecs().observe(this, t -> timeSegment.setTimeInSecs(t));
+        startTimer();
     }
 
-
-    private void startTimer() {
-        mCountDownTimer = new CountDownTimer(timeLeftinMillis, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                timeLeftinMillis = millisUntilFinished;
-                updateCountDownText();
-            }
-
-            @Override
-            public void onFinish() {
-                String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d:%02d", 0, 0, 0);
-                mCountdown.setText(timeLeftFormatted);
-                timerRunning = false;
-                findViewById(R.id.exit_button).setVisibility(View.VISIBLE);
-                //focusMode();
-                isTimerRunning = false;
-
-            }
-        }.start();
-        timerRunning = true;
-        isTimerRunning = true;
-        //mTimerInput.setVisibility(View.INVISIBLE);
+    void startTimer() {
+        timer = new Timer();
+        timer.setTotalTimeInSec(SettingData.getInstance().getFocusTimeSecs());
+        timer.setOnTick(t -> {
+            timerViewModel.getLeftTimeSecs().setValue(t);
+            Log.i("TimeSegment", ""+t);
+        });
+        timer.setOnFinish(this::exit);
+        timer.start();
     }
 
-    public void updateCountDownText() {
-        int hours = (int) (timeLeftinMillis / 1000) / 3600;
-        int minutes = (int) (timeLeftinMillis / 1000) % 3600 / 60;
-        int seconds = (int) (timeLeftinMillis / 1000) % 60;
-
-        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d:%02d", hours, minutes, seconds);
-        mCountdown.setText(timeLeftFormatted);
+    void exit() {
+        lifecycleObserver.disable();
+        setResult(RESULT_OK);
+        finish();
     }
+
 
     @Override
     public void onBackPressed() {}
 
-
-    public void openTimer(){
-        Intent intent = new Intent(this, Timer.class);
-        startActivity(intent);
-    }
 }
-
 
 class FocusLifeCycleObserver implements DefaultLifecycleObserver{
     private boolean shut;

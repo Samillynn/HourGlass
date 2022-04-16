@@ -22,6 +22,7 @@ public class FocusActivity extends AppCompatActivity {
     private TimeSegment timeSegment;
     private TextView mMotivation;
     private Button mExitButton;
+    private Button mForceQuitButton;
     private Button mOpenAppsButton;
     private TimeViewModel timeViewModel;
     private Timer timer;
@@ -39,6 +40,16 @@ public class FocusActivity extends AppCompatActivity {
                 finish();
             }
         }).show(getSupportFragmentManager(), "Exit Focus"));
+
+        mForceQuitButton = findViewById(R.id.force_quit);
+        mForceQuitButton.setOnClickListener(view -> new ForceQuitFragment(result -> {
+            if (result) {
+                SharedData.getInstance().setForceExitChances(
+                        SharedData.getInstance().getForceExitChances() - 1);
+                lifecycleObserver.disable();
+                finish();
+            }
+        }).show(getSupportFragmentManager(), "Force Quit"));
 
         mOpenAppsButton = findViewById(R.id.open_app);        mOpenAppsButton.setOnClickListener(view -> {
             lifecycleObserver.setUsingWhiteListApp(true);

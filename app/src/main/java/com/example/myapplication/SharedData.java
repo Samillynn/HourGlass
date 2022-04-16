@@ -14,6 +14,8 @@ public class SharedData {
     final static String SNOOZE_TIME_DEFAULT= "snooze_time_default";
     final static String WHITELIST_APPS = "whitelist_apps";
     final static String REAL_FOCUS_TIME = "real_focus_time";
+    final static String FORCE_EXIT_CHANCES =  "force_exit_chance";
+    final static int TOTAL_FORCE_EXIT_CHANCES = 3;
 
     SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
@@ -82,4 +84,13 @@ public class SharedData {
     public void setFocusTimeSecs(int focusTimeSecs) {
         editor.putInt(REAL_FOCUS_TIME, focusTimeSecs).apply();
     }
+
+    public int getForceExitChances() {
+        return sharedPreferences.getInt(FORCE_EXIT_CHANCES, TOTAL_FORCE_EXIT_CHANCES);
+    }
+
+    public void setForceExitChances(int forceExitChances) {
+        editor.putInt(FORCE_EXIT_CHANCES, forceExitChances).apply();
+    }
+
 }

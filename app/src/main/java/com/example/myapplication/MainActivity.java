@@ -36,8 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         SharedData.getInstance().initialize(this);
-        initActionBar();
-        initViews();
+        init();
 
         timeViewModel = new ViewModelProvider(this).get(TimeViewModel.class);
         timeViewModel.getTotalTimeSecs().observe(this, totalTime -> {
@@ -63,6 +62,11 @@ public class MainActivity extends AppCompatActivity {
             public void onStartTrackingTouch(CircularSeekBar seekBar) {}
         });
         changeState(new WaitRestState(this, timeViewModel));
+    }
+
+    public void init() {
+        initActionBar();
+        initViews();
     }
 
 
@@ -175,6 +179,7 @@ class RestState extends HomepageState {
         timer.setTotalTimeInSec(model.getTotalTimeSecs().getValue());
         timer.setOnTick(t -> model.getLeftTimeSecs().setValue(t));
         timer.setOnFinish(() -> {
+            activity.sendBroadcast(new Intent(activity, ReminderBroadcast.class));
             activity.changeState(new WaitFocusState(activity, model));
         });
     }
@@ -207,9 +212,7 @@ class WaitFocusState extends HomepageState {
 
     @Override
     void changeButton(View button) {
-        button.setOnClickListener(view -> {
-            activity.startFocus();
-        });
+        button.setOnClickListener(view -> activity.startFocus());
     }
 
     @Override

@@ -35,7 +35,7 @@ public class SharedData {
     }
 
     public String getMotivationMessage() {
-        return sharedPreferences.getString(MOTIVATION_MESSAGE, "Default Motivation Message");
+        return sharedPreferences.getString(MOTIVATION_MESSAGE, "Self-discipline is the way to happiness");
     }
 
     public void setMotivationMessage(String motivationMessage) {

@@ -12,7 +12,7 @@ public class SettingsFragment extends PreferenceFragment {
         super.onCreate(saveInstanceState);
         addPreferencesFromResource(R.xml.settings);
 
-        NumberPickerPreference relaxTimePref = (NumberPickerPreference)findPreference("relax_time");
+        NumberPickerPreference relaxTimePref = (NumberPickerPreference) findPreference("relax_time");
         relaxTimePref.setGetter(SharedData.getInstance()::getDefaultRestTimeSecs);
         relaxTimePref.setSetter(SharedData.getInstance()::setDefaultRestTimeSecs);
 
@@ -23,6 +23,7 @@ public class SettingsFragment extends PreferenceFragment {
         NumberPickerPreference snoozeTimePref = (NumberPickerPreference) findPreference("snooze_time");
         snoozeTimePref.setGetter(SharedData.getInstance()::getDefaultSnoozeTimeSecs);
         snoozeTimePref.setSetter(SharedData.getInstance()::setDefaultSnoozeTimeSecs);
+        snoozeTimePref.setMaxValue(15);
 
         Preference whitelistPref = findPreference("access_management");
         whitelistPref.setOnPreferenceClickListener(preference -> {

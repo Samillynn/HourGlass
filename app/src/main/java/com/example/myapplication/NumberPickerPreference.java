@@ -20,9 +20,8 @@ import java.util.function.Supplier;
 public class NumberPickerPreference extends DialogPreference {
 
     // allowed range
-    public static final int MAX_VALUE = 90;
+    public int max_value = 90;
     public static final int MIN_VALUE = 0;
-    public static final int DEFAULT_VALUE = 15;
     // enable or disable the 'circular behavior'
     public static final boolean WRAP_SELECTOR_WHEEL = true;
 
@@ -38,28 +37,17 @@ public class NumberPickerPreference extends DialogPreference {
         super(context, attrs, defStyleAttr);
     }
 
-    @Override
-    protected View onCreateDialogView() {
-        Log.i("Dialog", "onCreateDialogView");
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.gravity = Gravity.CENTER;
-
-        picker = new NumberPicker(getContext());
-        picker.setLayoutParams(layoutParams);
-
-        FrameLayout dialogView = new FrameLayout(getContext());
-        dialogView.addView(picker);
-
-        return dialogView;
+    public void setMaxValue(int maxValue){
+        this.max_value = maxValue;
     }
 
     @Override
     protected void onBindDialogView(View view) {
         Log.i("Dialog", "onBindDialogView");
         super.onBindDialogView(view);
+        picker = view.findViewById(R.id.number_picker);
         picker.setMinValue(MIN_VALUE);
-        picker.setMaxValue(MAX_VALUE);
+        picker.setMaxValue(max_value);
         picker.setWrapSelectorWheel(WRAP_SELECTOR_WHEEL);
         picker.setValue(getValue.get());
     }

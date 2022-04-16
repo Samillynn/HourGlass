@@ -25,8 +25,8 @@ public class ReminderBroadcast extends BroadcastReceiver{
                 .setContentIntent(contentIntent) //for going back to app
                 .setContentTitle("Reminder")
                 .setContentText("Time to get back to work! " + SharedData.getInstance().getMotivationMessage())
-                .setDefaults(NotificationCompat.DEFAULT_ALL)
-                .setPriority(NotificationCompat.PRIORITY_MAX);
+                .setDefaults(NotificationCompat.DEFAULT_SOUND|NotificationCompat.DEFAULT_VIBRATE)
+                .setPriority(NotificationCompat.PRIORITY_HIGH);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 <PreferenceCategory android:title="@string/default_time_section_name">
+    <!-- Default Time Setting -->
     <com.example.myapplication.NumberPickerPreference
         android:title="@string/settings_default_relax_time"
         android:summary="@string/default_relax_time_summary"
@@ -22,6 +23,7 @@
 
 </PreferenceCategory>
 
+    <!-- Access Management Setting -->
 <PreferenceCategory android:title="@string/access_management_section_name">
     <Preference
         android:title="@string/access_management_section_name"
@@ -29,6 +31,7 @@
         android:key="access_management" />
 </PreferenceCategory>
 
+    <!-- Motivational Massage Setting -->
 <PreferenceCategory android:title="@string/motivational_msg_section_name">
     <EditTextPreference
         android:title="@string/motivational_msg_section_name"

@@ -9,7 +9,7 @@
     tools:context=".MainActivity">
 
 
-
+    <!-- To display the instruction -->
     <TextView
         android:id="@+id/textViewInstruction"
         android:layout_width="wrap_content"
@@ -37,6 +37,7 @@
         app:layout_constraintVertical_bias="0.16"
         android:visibility="gone"/>
 
+    <!-- To display the image in the center of the progress bar -->
     <ImageView
         android:layout_width="139dp"
         android:layout_height="176dp"
@@ -47,6 +48,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.325" />
 
+    <!-- To display the time segment -->
     <com.example.myapplication.TimeSegment
         android:id="@+id/time_segment"
         android:layout_width="wrap_content"
@@ -61,6 +63,7 @@
         app:ts_time_background="@drawable/time_box_grey" />
 
 
+    <!-- To display the custom button at the bottom to start -->
     <ImageButton
         android:id="@+id/button"
         android:layout_width="match_parent"
@@ -69,6 +72,7 @@
         android:src="@drawable/custom_button"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
+    <!-- To display the instruction on the custom button-->
     <TextView
         android:id="@+id/bottom_button_text"
         android:layout_width="wrap_content"
@@ -85,6 +89,7 @@
         app:layout_constraintVertical_bias="0.93" />
 
 
+    <!-- To display the custom draggable progress bar -->
     <com.example.myapplication.CircularSeekBar
         android:id="@+id/circular_seekbar"
         android:layout_width="313dp"

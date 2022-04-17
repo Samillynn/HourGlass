@@ -12,6 +12,9 @@ public class Timer {
     private Runnable onFinish;
     private CountDownTimer countDownTimer;
 
+    /** Initialise an countdown timer,
+     Set the behaviors when each second passes and timer finishes,
+     Start the countdown timer */
     public void start() {
         countDownTimer = new CountDownTimer(totalTimeInSec * 1000L, 500) {
 
@@ -35,9 +38,12 @@ public class Timer {
         totalTimeInSec = totalTimeInSec1;
     }
 
+    // Cancel the timer
     public void cancel() {
         if (countDownTimer != null) countDownTimer.cancel();
     }
+
+    // Cancel the timer and reset everything
     public void clear() {
         cancel();
         onTick = null;
@@ -45,10 +51,15 @@ public class Timer {
         leftTimeInSec = 0;
         totalTimeInSec = 0;
     }
+
+    /** Each second passes, run the function taken */
+    // IntConsumer callback: it takes an integer argument and doesn't return anything
     public void setOnTick(IntConsumer callback) {
         onTick = callback;
     }
 
+    /** Each the timer finishes, run the function taken in */
+    // Runnable callback: it takes no arguments and doesn't return anything
     public void setOnFinish(Runnable callback) {
         onFinish = callback;
     }

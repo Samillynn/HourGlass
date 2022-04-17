@@ -13,6 +13,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true">
 
+        <!-- To display a number picker in the settings dialog -->
         <NumberPicker
             android:id="@+id/number_picker"
             android:layout_width="wrap_content"
@@ -21,6 +22,7 @@
         </NumberPicker>
 
 
+        <!-- Display the unit min in the dialog -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

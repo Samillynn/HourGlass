@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
+    <!--To display the app logo of the whitelist app-->
     <ImageView
         android:id="@+id/app_icon"
         android:layout_width="50dp"
@@ -12,6 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!--To display the app name of the whitelist app-->
     <TextView
         android:id="@+id/app_label"
         android:layout_width="wrap_content"
@@ -23,6 +25,7 @@
         app:layout_constraintTop_toTopOf="@+id/app_icon"
         app:layout_constraintVertical_bias="0.516" />
 
+    <!--To display whether the app is accessible and allow users to tick or unselect it-->
     <CheckBox
         android:id="@+id/app_checkbox"
         android:layout_width="wrap_content"

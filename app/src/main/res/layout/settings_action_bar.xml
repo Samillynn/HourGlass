@@ -13,12 +13,14 @@
         android:layout_height="match_parent"
         android:layout_weight="1">
 
+        <!-- To display a "return last page" icon in the action bar, it is clickable -->
         <ImageView
             android:id="@+id/return_last_page"
             android:layout_width = "wrap_content"
             android:layout_height = "match_parent"
             android:src = "@drawable/return_last_page" />
 
+        <!-- To display the name of this page -->
         <TextView
             android:id="@+id/settings"
             android:layout_width="match_parent"

@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".main_screen.MainActivity">
 
 
 
@@ -47,7 +47,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.325" />
 
-    <com.example.myapplication.TimeSegment
+    <com.example.myapplication.ui_components.TimeSegment
         android:id="@+id/time_segment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
         app:layout_constraintVertical_bias="0.93" />
 
 
-    <com.example.myapplication.CircularSeekBar
+    <com.example.myapplication.ui_components.CircularSeekBar
         android:id="@+id/circular_seekbar"
         android:layout_width="313dp"
         android:layout_height="307dp"

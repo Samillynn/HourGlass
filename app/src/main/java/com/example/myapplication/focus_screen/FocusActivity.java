@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.focus_screen;
 
 import android.app.PendingIntent;
 import android.content.Context;
@@ -16,6 +16,12 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.example.myapplication.R;
+import com.example.myapplication.models.SharedData;
+import com.example.myapplication.models.TimeViewModel;
+import com.example.myapplication.ui_components.TimeSegment;
+import com.example.myapplication.utils.Timer;
 
 public class FocusActivity extends AppCompatActivity {
     private FocusLifeCycleObserver lifecycleObserver;
@@ -94,7 +100,6 @@ class FocusLifeCycleObserver implements DefaultLifecycleObserver{
     private SystemButtonBR systemButtonBR;
 
     public FocusLifeCycleObserver(Context _context) {
-//        disable();
         usingWhiteListApp = false;
         context = _context;
         systemButtonBR = new SystemButtonBR(this::restartFocus);

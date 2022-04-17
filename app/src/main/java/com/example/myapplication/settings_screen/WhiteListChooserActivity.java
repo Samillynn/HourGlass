@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.settings_screen;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,6 +15,9 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.myapplication.R;
+import com.example.myapplication.models.SharedData;
 
 import java.util.ArrayList;
 import java.util.HashSet;

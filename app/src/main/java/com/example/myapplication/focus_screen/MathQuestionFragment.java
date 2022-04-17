@@ -1,10 +1,8 @@
-package com.example.myapplication;
+package com.example.myapplication.focus_screen;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -12,6 +10,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
+import com.example.myapplication.models.SharedData;
 
 import java.util.HashMap;
 import java.util.Random;

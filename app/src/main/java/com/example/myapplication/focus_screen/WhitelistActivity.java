@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.focus_screen;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.myapplication.R;
+import com.example.myapplication.models.SharedData;
 import com.google.android.flexbox.FlexboxLayout;
 
 import java.util.Set;

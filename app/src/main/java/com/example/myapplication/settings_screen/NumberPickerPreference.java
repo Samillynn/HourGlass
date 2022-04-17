@@ -1,15 +1,14 @@
-package com.example.myapplication;
+package com.example.myapplication.settings_screen;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.NumberPicker;
+
+import com.example.myapplication.R;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;

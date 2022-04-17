@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 <PreferenceCategory android:title="@string/default_time_section_name">
-    <com.example.myapplication.NumberPickerPreference
+    <com.example.myapplication.settings_screen.NumberPickerPreference
         android:title="@string/settings_default_relax_time"
         android:summary="@string/default_relax_time_summary"
         android:key="relax_time"
         android:icon="@drawable/relax_time_icon"
         android:dialogLayout="@layout/number_picker_dialog"/>
-    <com.example.myapplication.NumberPickerPreference
+    <com.example.myapplication.settings_screen.NumberPickerPreference
         android:title="@string/settings_default_focus_time"
         android:summary="@string/default_focus_time_summary"
         android:key="focus_time"
         android:icon="@drawable/focus_time_icon"
         android:dialogLayout="@layout/number_picker_dialog"/>
-    <com.example.myapplication.NumberPickerPreference
+    <com.example.myapplication.settings_screen.NumberPickerPreference
         android:title="@string/settings_default_snooze_time"
         android:summary="@string/default_snooze_time_summary"
         android:key="snooze_time"

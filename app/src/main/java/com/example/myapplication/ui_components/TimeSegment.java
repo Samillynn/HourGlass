@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.ui_components;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.example.myapplication.R;
 
 public class TimeSegment extends ConstraintLayout {
     TextView minutesView;
@@ -60,19 +62,20 @@ public class TimeSegment extends ConstraintLayout {
         colonView.setTextSize(textSize);
     }
 
-    void setTimeInSecs(int seconds) {
+    public void setTimeInSecs(int seconds) {
+
         setMinutes(seconds/60);
         setSeconds(seconds%60);
     }
 
-    void setMinutes(int minutes) {
+    public void setMinutes(int minutes) {
         String minuteText = String.valueOf(minutes);
         if (minuteText.length() < 2)
             minuteText = '0' + minuteText;
         minutesView.setText(minuteText);
     }
 
-    void setSeconds(int seconds) {
+    public void setSeconds(int seconds) {
         String secondsText = String.valueOf(seconds);
         if (secondsText.length() < 2)
             secondsText = '0' + secondsText;

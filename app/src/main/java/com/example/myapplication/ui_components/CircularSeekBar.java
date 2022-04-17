@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.ui_components;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -15,6 +15,8 @@ import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.example.myapplication.R;
 
 import java.util.HashMap;
 

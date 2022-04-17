@@ -1,10 +1,13 @@
-package com.example.myapplication;
+package com.example.myapplication.settings_screen;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.util.Log;
+
+import com.example.myapplication.R;
+import com.example.myapplication.models.SharedData;
 
 public class SettingsFragment extends PreferenceFragment {
     @Override

@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.focus_screen;
 
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;

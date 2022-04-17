@@ -17,10 +17,10 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.function.Consumer;
 
-public class ExitFocusDialogFragment extends DialogFragment {
+public class MathQuestionFragment extends DialogFragment {
     Consumer<Boolean> activityCallback;
 
-    ExitFocusDialogFragment(Consumer<Boolean> callback) {
+    MathQuestionFragment(Consumer<Boolean> callback) {
         super();
         activityCallback = callback;
     }
@@ -50,22 +50,19 @@ public class ExitFocusDialogFragment extends DialogFragment {
                 .setView(input)
                 .setTitle("Emergency Exit")
                 .setMessage("Please answer to exit\n" + questionsAnswers[0])
-                .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        if(input.getText().toString().equals(questionsAnswers[1])){
-                            activityCallback.accept(true);
-                            dialog.dismiss();
-                        } else {
-                            Toast.makeText(getContext(), "Wrong Answer", Toast.LENGTH_LONG).show();
-                        }
+                .setPositiveButton("Submit", (dialog, which) -> {
+                    if(input.getText().toString().equals(questionsAnswers[1])){
+                        SharedData.getInstance().setForceExitChances(SharedData.getInstance().getForceExitChances() - 1);
+                        activityCallback.accept(true);
+                        dialog.dismiss();
+                    } else {
+                        Toast.makeText(getContext(), "Wrong Answer", Toast.LENGTH_LONG).show();
                     }
                 })
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Handle a negative answer
-                        activityCallback.accept(false);
-                        dialog.dismiss();
-                    }
+                .setNegativeButton(android.R.string.no, (dialog, which) -> {
+                    // Handle a negative answer
+                    activityCallback.accept(false);
+                    dialog.dismiss();
                 });
         return dialogBuilder.create();
     }

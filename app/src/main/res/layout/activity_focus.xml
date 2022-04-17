@@ -56,19 +56,6 @@
         app:layout_constraintHorizontal_bias="0.807"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/force_quit"
-        android:layout_width="135dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="28dp"
-        android:backgroundTint="@color/grey"
-        android:text="Force quit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.815"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="181dp"

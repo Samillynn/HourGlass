@@ -2,7 +2,6 @@ package com.example.myapplication;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,24 +10,14 @@ import androidx.fragment.app.DialogFragment;
 
 import java.util.function.Consumer;
 
-public class ForceQuitFragment extends DialogFragment {
+public class ForceQuitFocusFragment extends DialogFragment {
 
     Consumer<Boolean> activityCallback;
 
-    ForceQuitFragment(Consumer<Boolean> activityCallback) {
+    ForceQuitFocusFragment(Consumer<Boolean> activityCallback) {
         this.activityCallback = activityCallback;
     }
 
-    DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialogInterface, int which) {
-            if (which == DialogInterface.BUTTON_POSITIVE) {
-                activityCallback.accept(true);
-            } else if (which == DialogInterface.BUTTON_NEGATIVE) {
-                activityCallback.accept(false);
-            }
-        }
-    };
 
     @NonNull
     @Override
@@ -46,8 +35,14 @@ public class ForceQuitFragment extends DialogFragment {
                 .setMessage("You only have "
                         + SharedData.getInstance().getForceExitChances()
                         + " more chances to force quit focus mode. Are you sure?")
-                .setPositiveButton(R.string.force_exit_confirm_quit, onClickListener)
-                .setNegativeButton(android.R.string.cancel, onClickListener);
+                .setPositiveButton(R.string.force_exit_confirm_quit, (dialog, i) -> {
+                    dismiss();
+                    new MathQuestionFragment(activityCallback).show(getParentFragmentManager(), "Math Quit");
+                })
+                .setNegativeButton(android.R.string.cancel, (dialog, i) -> {
+                    dismiss();
+                    activityCallback.accept(false);
+                });
 
         return dialogBuilder.create();
     }
@@ -56,7 +51,10 @@ public class ForceQuitFragment extends DialogFragment {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext())
                 .setTitle("Force Quit")
                 .setMessage("Sorry, you can't force quit because you have run out of force quit chances")
-                .setNegativeButton(android.R.string.cancel, onClickListener);
+                .setNegativeButton(android.R.string.cancel, (dialog, i) -> {
+                    dismiss();
+                    activityCallback.accept(false);
+                });
 
         return dialogBuilder.create();
 

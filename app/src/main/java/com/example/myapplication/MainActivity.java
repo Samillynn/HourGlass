@@ -191,7 +191,7 @@ class RestState extends HomepageState {
 }
 
 class WaitFocusState extends HomepageState {
-    final int TIME_BEFORE_FORCE_FOCUS_SECS = 120;
+    final int TIME_BEFORE_FORCE_FOCUS_SECS = 30;
 
     WaitFocusState(MainActivity activity, TimeViewModel model) {
         super(activity, model);
@@ -218,15 +218,8 @@ class WaitFocusState extends HomepageState {
     @Override
     void changeTimer(Timer timer) {
         int snoozeTimeSecs = SharedData.getInstance().getDefaultSnoozeTimeSecs();
-        timer.setTotalTimeInSec(snoozeTimeSecs + TIME_BEFORE_FORCE_FOCUS_SECS);
-        timer.setOnTick(t -> {
-            if (t == TIME_BEFORE_FORCE_FOCUS_SECS) {
-                activity.sendBroadcast(new Intent(activity, ReminderBroadcast.class));
-            }
-            if (t == 0) {
-                activity.startActivity(new Intent(activity, FocusActivity.class));
-            }
-        });
+        timer.setTotalTimeInSec(snoozeTimeSecs);
+        timer.setOnFinish(() -> activity.startFocus());
     }
 
     @Override

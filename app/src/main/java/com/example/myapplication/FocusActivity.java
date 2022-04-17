@@ -21,7 +21,6 @@ public class FocusActivity extends AppCompatActivity {
     private FocusLifeCycleObserver lifecycleObserver;
     private TimeSegment timeSegment;
     private TextView mMotivation;
-    private Button mExitButton;
     private Button mForceQuitButton;
     private Button mOpenAppsButton;
     private TimeViewModel timeViewModel;
@@ -33,23 +32,14 @@ public class FocusActivity extends AppCompatActivity {
         setContentView(R.layout.activity_focus);
         setResult(RESULT_OK);
 
-        mExitButton = findViewById(R.id.exit_button);
-        mExitButton.setOnClickListener(view -> new ExitFocusDialogFragment(result -> {
+        mForceQuitButton = findViewById(R.id.exit_button);
+        mForceQuitButton.setOnClickListener(view -> new ForceQuitFocusFragment(result -> {
             if (result) {
                 lifecycleObserver.disable();
                 finish();
             }
         }).show(getSupportFragmentManager(), "Exit Focus"));
 
-        mForceQuitButton = findViewById(R.id.force_quit);
-        mForceQuitButton.setOnClickListener(view -> new ForceQuitFragment(result -> {
-            if (result) {
-                SharedData.getInstance().setForceExitChances(
-                        SharedData.getInstance().getForceExitChances() - 1);
-                lifecycleObserver.disable();
-                finish();
-            }
-        }).show(getSupportFragmentManager(), "Force Quit"));
 
         mOpenAppsButton = findViewById(R.id.open_app);        mOpenAppsButton.setOnClickListener(view -> {
             lifecycleObserver.setUsingWhiteListApp(true);

@@ -6,8 +6,8 @@ import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myapplication.main_screen.MainActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.main_screen.MainActivity;
 
 
 public class SettingsActivity extends AppCompatActivity {

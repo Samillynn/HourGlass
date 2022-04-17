@@ -12,6 +12,14 @@
         android:icon="@mipmap/ic_launcher"
         android:theme="@style/Theme.MyApplication"
         android:label="@string/app_name">
+        <activity android:name=".main_screen.MainActivity"
+            android:screenOrientation="portrait"
+            android:exported="true">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".settings_screen.SettingsActivity"
             android:screenOrientation="portrait"
@@ -21,21 +29,13 @@
             android:screenOrientation="portrait"
             android:exported="false" />
         <activity
-            android:name=".main_screen.MainActivity"
-            android:screenOrientation="portrait"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name=".focus_screen.FocusActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.MyApplication.NoActionBar"
             android:exported="false" />
-        <activity android:name=".settings_screen.WhiteListChooserActivity" />
+
+        <activity android:name=".settings_screen.WhiteListChooserActivity"
+            android:screenOrientation="portrait"/>
 
         <receiver android:name=".focus_screen.SystemButtonBR" />
         <receiver android:name=".main_screen.ReminderBroadcast" />

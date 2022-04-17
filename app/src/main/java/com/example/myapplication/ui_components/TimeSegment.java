@@ -67,7 +67,7 @@ public class TimeSegment extends ConstraintLayout {
     }
 
     // Call the setMinutes and setSeconds functions
-    void setTimeInSecs(int seconds) {
+    public void setTimeInSecs(int seconds) {
         setMinutes(seconds/60);
         setSeconds(seconds%60);
     }

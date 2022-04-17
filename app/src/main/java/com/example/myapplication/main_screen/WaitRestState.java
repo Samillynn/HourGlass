@@ -12,41 +12,50 @@ import com.example.myapplication.models.TimeViewModel;
 import com.example.myapplication.ui_components.CircularSeekBar;
 import com.example.myapplication.utils.Timer;
 
-public class WaitRestState extends MainActivity.HomepageState {
-
+/**
+ * State1: WaitRestState
+ */
+class WaitRestState extends MainActivity.HomepageState {
+    // Constructor
     WaitRestState(MainActivity activity, TimeViewModel model) {
         super(activity, model);
     }
 
+    // Change the instruction text
     @Override
     void changeInstructionTextView(TextView view) {
-        String textInstruction = getActivity().getString(R.string.set_relax);
+        String textInstruction = activity.getString(R.string.set_relax);
+        // Highlight the key words
         SpannableString spannable = new SpannableString(textInstruction);
-        spannable.setSpan(new ForegroundColorSpan(getActivity().getResources().getColor(R.color.blue)), 16, 21, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        spannable.setSpan(new ForegroundColorSpan(activity.getResources().getColor(R.color.blue)), 16, 21, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         view.setText(spannable);
     }
 
+    // Change the button text
     @Override
     void changeButtonTextView(TextView view) {
         view.setText(R.string.start_rest);
     }
 
+    // Change the behaviors of the button
     @Override
     void changeButton(View button) {
         button.setOnClickListener(view -> {
-            getTimeViewModel().getTotalTimeSecs().setValue(getTimeViewModel().getLeftTimeSecs().getValue());
-            getActivity().changeState(new RestState(getActivity(), getTimeViewModel()));
+            model.getTotalTimeSecs().setValue(model.getLeftTimeSecs().getValue());
+            activity.changeState(new RestState(activity, model));
         });
     }
 
+    // This state will not change the timer
     @Override
     void changeTimer(Timer timer) {
     }
 
+    // Change the params of the circularBar
     @Override
     void changeSeekbar(CircularSeekBar seekBar) {
         seekBar.setDisablePointer(false);
-        getTimeViewModel().getTotalTimeSecs().setValue(90 * 60);
-        getTimeViewModel().getLeftTimeSecs().setValue(SharedData.getInstance().getDefaultRestTimeSecs());
+        model.getTotalTimeSecs().setValue(90 * 60);
+        model.getLeftTimeSecs().setValue(SharedData.getInstance().getDefaultRestTimeSecs());
     }
 }

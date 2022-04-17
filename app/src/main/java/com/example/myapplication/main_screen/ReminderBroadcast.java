@@ -8,7 +8,6 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.myapplication.R;
-import com.example.myapplication.main_screen.MainActivity;
 import com.example.myapplication.models.SharedData;
 
 

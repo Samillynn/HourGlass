@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     >
 
+    <!-- To display the minute section of the current time -->
     <TextView
         android:id="@+id/textViewMin"
         android:layout_width="wrap_content"
@@ -19,6 +20,7 @@
         app:layout_constraintEnd_toStartOf="@+id/textViewColon"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- To display the colon of the time segment -->
     <TextView
         android:id="@+id/textViewColon"
         android:layout_width="wrap_content"
@@ -30,6 +32,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- To display the second section of the current time -->
     <TextView
         android:id="@+id/textViewSec"
         android:layout_width="wrap_content"

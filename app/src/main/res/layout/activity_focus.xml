@@ -5,11 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue"
-    tools:context=".focus_screen.FocusActivity">
+    tools:context=".FocusActivity">
 
 
     <!--rounded_corner is for the timer background-->
 
+    <!--To display the instruction-->
     <TextView
         android:id="@+id/focus_warning"
         android:layout_width="wrap_content"
@@ -27,6 +28,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.122" />
 
+    <!--To display the motivational msg users set in the settings-->
     <TextView
         android:id="@+id/motivation"
         android:layout_width="wrap_content"
@@ -43,6 +45,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.193" />
 
+    <!--To display the exit button-->
     <Button
         android:id="@+id/exit_button"
         android:layout_width="135dp"
@@ -56,6 +59,7 @@
         app:layout_constraintHorizontal_bias="0.807"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <!--To display the app logo-->
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="181dp"
@@ -73,7 +77,8 @@
         app:layout_constraintVertical_bias="0.374"
         app:srcCompat="@drawable/hourglass_logo_for_block_screen" />
 
-    <com.example.myapplication.ui_components.TimeSegment
+    <!--To display the time segment-->
+    <com.example.myapplication.TimeSegment
         android:id="@+id/time_segment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -87,6 +92,7 @@
         app:layout_constraintVertical_bias="0.692"
         app:ts_time_background="@drawable/time_box_dark_blue" />
 
+    <!--To display the whitelist button-->
     <Button
         android:id="@+id/open_app"
         android:layout_width="135dp"

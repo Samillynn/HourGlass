@@ -13,6 +13,7 @@
         android:layout_height="match_parent"
         android:layout_weight="0.6">
 
+        <!-- To display the name of this page: Home -->
         <TextView
             android:id="@+id/home"
             android:layout_width="match_parent"
@@ -30,6 +31,7 @@
         android:layout_weight="0.4"
         android:gravity="end">
 
+        <!-- To display the "settings" icon which is clickable to jump to the settings activity -->
     <ImageView
         android:id="@+id/setting_button"
         android:layout_width="wrap_content"

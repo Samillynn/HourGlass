@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".settings_screen.WhiteListChooserActivity">
 
+    <!--To display a list of the apps-->
     <ListView
         android:id="@+id/whitelist_chooser"
         android:layout_width="match_parent"
@@ -13,6 +14,7 @@
         app:layout_constraintBottom_toTopOf="@+id/cancel_action"
         tools:layout_editor_absoluteX="16dp" />
 
+    <!--To display the save button-->
     <Button
         android:id="@+id/save_action"
         android:layout_width="214dp"
@@ -22,6 +24,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!--To display the cancel button-->
     <Button
         android:id="@+id/cancel_action"
         android:layout_width="213dp"

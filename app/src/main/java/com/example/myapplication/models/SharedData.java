@@ -29,6 +29,7 @@ public class SharedData {
         editor = sharedPreferences.edit();
     }
 
+    // Make SharedDate a singleton
     static public SharedData getInstance() {
         if (singletonInstance == null) {
             singletonInstance = new SharedData();

@@ -25,9 +25,14 @@ public class NumberPickerPreference extends DialogPreference {
     public static final boolean WRAP_SELECTOR_WHEEL = true;
 
     private NumberPicker picker;
+    // Supplier is an interface whose method id get()
+    // It takes no argument and returns an integer
     Supplier<Integer> getValue;
+    // Consumer is an interface whose method id accept()
+    // It takes in an integer and does not return any value
     Consumer<Integer> setValue;
 
+    // Constructor
     public NumberPickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -40,6 +45,7 @@ public class NumberPickerPreference extends DialogPreference {
         this.max_value = maxValue;
     }
 
+    // Initialize and reset the NumberPicker when inflating the dialog view
     @Override
     protected void onBindDialogView(View view) {
         Log.i("Dialog", "onBindDialogView");
@@ -51,6 +57,7 @@ public class NumberPickerPreference extends DialogPreference {
         picker.setValue(getValue.get());
     }
 
+    // If ok is pressed, update the changed value in the SharedData pool
     @Override
     protected void onDialogClosed(boolean positiveResult) {
         if (positiveResult) {
@@ -62,6 +69,7 @@ public class NumberPickerPreference extends DialogPreference {
         }
     }
 
+    // Get the value from the attribute of the number picker
     @Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
         Log.i("Dialog", "onGetDefaultValue");

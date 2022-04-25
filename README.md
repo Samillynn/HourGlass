@@ -199,10 +199,10 @@ The system architecture follows.
 
 | Name                | Contributions        |
 |---------------------|----------------------|
-| Lin Yutian          | UI/UX Design, Report |
-| Liu Renhang         | Backend Code, Report |
-| Meng Fanyi          | Backend Code, Video  |
-| Lee Pei Xuan        | UI/UX Design, Report |
-| Sun Zhengnan        | UI/UX Design, Report |
-| Lim Hong Jun Joshua | Backend Code, Report |
-| Lim Si Hui Brenda   | UI/UX Design, Poster |
+| Lin Yutian          | Code, Report |
+| Liu Renhang         | Code, Report |
+| Meng Fanyi          | Code, Video  |
+| Lee Pei Xuan        | Code, Report |
+| Sun Zhengnan        | Code, Report |
+| Lim Hong Jun Joshua | Code, Report |
+| Lim Si Hui Brenda   | Code, Poster |

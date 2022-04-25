@@ -12,7 +12,8 @@ Implementation</u>](#system-design-and-implementation)
 >
 > [<u>Start Focus Mode</u>](#start-focus-mode)
 >
-> [<u>Stay in Focus Mode</u>](#stay-in-focus-mode)
+> [<u>Stay in Focus Mode (Lockdown the
+> Phone)</u>](#stay-in-focus-mode-lockdown-the-phone)
 >
 > [<u>Open Whitelisted Apps in Focus
 > Mode</u>](#open-whitelisted-apps-in-focus-mode)
@@ -22,7 +23,7 @@ Implementation</u>](#system-design-and-implementation)
 [<u>Concepts and their applications from Information Systems and
 Programming</u>](#concepts-and-their-applications-from-information-systems-and-programming)
 
-[<u>Contributions</u>](#section-1)
+[<u>Contributions</u>](#contributions)
 
 ### **Members**
 
@@ -36,7 +37,7 @@ Lee Pei Xuan 1005513
 
 Sun Zhengnan 1004882
 
-Lim Hong Jun Joshua 1005259
+Lim Hong Jun, Joshua 1005259
 
 Lim Si Hui Brenda 1004578
 
@@ -85,7 +86,6 @@ notification will be sent to remind the user to go back.
 The diagram demonstrates how the **three states** interact with each
 other.
 
-
 ![start and finish rest](images/start_and_finish_rest.png?raw=true "start and finish rest")
 
 ***Implementation Details:***
@@ -106,45 +106,57 @@ situations:
 1.  The user presses the “START FOCUS” button.
 
 2.  The time that the user has procrastinated in other apps reached the
-    > snooze time the user set in the settings page (or 2 minutes by
-    > default). In this case, the focus timer will be set to the default
-    > focus time the user set in the settings page (or 25 minutes by
-    > default).
+    snooze time the user set in the settings page (or 2 minutes by
+    default). In this case, the focus timer will be set to the default
+    focus time the user set in the settings page (or 25 minutes by
+    default).
 
 The following diagram describes how the user enters focus mode.
 
 ![enter focus mode](images/enter_focus.png?raw=true "enter focus mode")
 
-#### **Stay in Focus Mode**
+#### **Stay in Focus Mode (Lockdown the Phone)**
 
-Once the user enters the focus mode, FocusActivity is responsible for
-locking the phone. The FocusLifecycleObserver class is used to observe
-the change in the state of the lifecycle of the FocusActivity. When the
-user tries to exit the Focus mode, the lifecycle will no longer be
-Resumed. Depending on how the user attempts to exit, we either send an
-immutable PendingIntent to the context or simply restart the
-FocusActvitiy.
+Once the user enters the focus mode, the user is banned from leaving the
+activity (FocusActivity). To implement the lockdown, the
+FocusLifecycleObserver class is used to observe the change in the state
+of the lifecycle of the FocusActivity. When the user tries to leave
+FocusActivity, the FocusLifecycleObserver will restart FocusActivity.
+The FocusLifecycleObserver also registers a broadcast receiver called
+SystemButtonBR. Whenever the user presses the HOME or RECENT_APPS
+buttons, SystemButtonBR restarts the target activity (FocusActivity in
+this case). By combining FocusLifecycleObserver and SystemButtonBR, our
+application is capable of preventing the user from leaving the focus
+mode. The system architecture follows.
+
+![focus mechanism](images/basic_focus_mechanism.png?raw=true "focus mechanism")
 
 #### **Open Whitelisted Apps in Focus Mode**
 
-WhitelistChooserActivity and WhitelistActivity are used in conjunction
+WhiteListChooserActivity and WhiteListActivity are used in conjunction
 to implement the whitelist function for Focus mode.
-WhitelistChooserActivity scans the phone for installed apps to allow the
+WhiteListChooserActivity scans the phone for installed apps to allow the
 user to choose their whitelisted apps. The diagram below shows how the
 user is able to choose the whitelisted apps.
 
-[//]: # (<img src="images/choose_whitelisted_apps.png"/>)
 ![choose whitelisted apps](images/choose_whitelisted_apps.png?raw=true "enter focus mode")
 
-WhitelistActivity sets up the whitelist activity for users to choose
-their whitelisted apps.
+WhiteListActivity sets up the whitelist activity for users to access
+their whitelisted apps in the focus mode. The diagram below shows the
+procedure.
 
 ![open whitelisted apps](images/open_whitelisted_apps.png?raw=true "open focus mode")
 
-The system architecture follows.
+The system architecture to modify and access the whitelisted apps
+follows.
 
-[//]: # (<img src="images/whitelist_architecture.png"/>)
 ![whitelist architecture](images/whitelist_architecture.png?raw=true "whitelist architecture")
+
+The following system diagram illustrates how FocusActivity integrates
+with WhitelistActivity, which ensures the user will not break the
+lockdown mode.
+
+![full focus mechanism](images/complete_focus_mechanism.png?raw=true "complete focus mechanism")
 
 The timer is implemented using the Timer and TimerViewModel class. The
 former uses CountDownTimer to create the countdown sequence while the
@@ -153,22 +165,21 @@ latter is used to display the timer in the app.
 #### **Exit the Focus Mode**
 
 In our design, every user only has 3 chances to forcibly exit the focus
-mode. Otherwise, the user has to wait until the timer goes off. To
-forcibly exit, the ForceExitFragment makes use of the dialog to cover
-the FocusActivity, and prompt the user with a confirmation message, if
-the user still has enough chances to exit. And an easy math question
-will pop-up when they confirm to exit. If the user answers correctly,
-the FocusActivity exits. If not, the dialog closes and the user remains
-in Focus mode. The math question design aims to give our users a time
-buffer, so that they can think twice whether they really need to
-forcibly exit the focus mode. The diagram below shows how the user can exit the focus mode.
-
+mode. If the chances are used up, the user has to wait until the timer
+goes off. To forcibly exit, the ForceExitFragment makes use of the
+dialog to cover the FocusActivity, and prompt the user with a
+confirmation message, if the user still has enough chances to exit. An
+easy math question will also pop up when they confirm to exit. If the
+user answers correctly, the FocusActivity exits. If not, the dialog
+closes and the user remains in Focus mode. The math question design aims
+to give our users a time buffer, so that they can think twice whether
+they really need to forcibly exit the focus mode. The diagram below
+shows how the user can exit the focus mode.
 
 ![exit focus](images/exit_focus.png?raw=true "exit focus")
 
 The system architecture follows.
 
-[//]: # (<img src="images/exit_focus_architecture.png"/>)
 ![exit_focus_architecture](images/exit_focus_architecture.png?raw=true "exit focus architecture")
 
 ###  
@@ -177,32 +188,59 @@ The system architecture follows.
 
 1.  Design Patterns
 
-    1.  Singletons
+    1.  Singletons:
 
-    2.  Observers
+> We implement a singleton SharedData class, which is a centralized and
+> unique data manager for all other classes to access and modify.
 
-    3.  States
+2.  Observers
 
-2.  Fragments
+> LifecycleObservers: we implement a FocusLifecycleObserver class which
+> observes the life state of FocusActivity, and behaves accordingly.
 
-3.  LifeCycle
+3.  States
 
-4.  Explicit/Implicit intents
+> In the implementation of MainActivity, we used State pattern to switch
+> between different modes to reuse components in MainActivity
 
-5.  OnActivityResult
+4.  View-Model-Viewmodel
 
-6.  ListViewAdapter
+> In MainActivity and FocusActivity, to synchronize the UI time related
+> component and the background timer, we use View-Model-Viewmodel
+> pattern to split the process.
+
+2.  Abstract Class
+
+> We implement an abstract class called HomepageState, so that the
+> different states in MainActivity can share the same codes and
+> interface.
+
+3.  Fragments
+
+> We used fragments in SettingActivity and FocusActivity
+
+4.  ListViewAdapter
+
+> In the setting page, to allow the user to choose their whitelisted
+> applications, we implemented a ListViewAdapter to display all the user
+> applications.
+
+5.  LifeCycle
+
+6.  Explicit/Implicit intents
+
+7.  OnActivityResult
 
 ### 
 
 ### Contributions
 
-| Name                | Contributions        |
-|---------------------|----------------------|
-| Lin Yutian          | UI/UX Design, Report |
-| Liu Renhang         | Backend Code, Report |
-| Meng Fanyi          | Backend Code, Video  |
-| Lee Pei Xuan        | UI/UX Design, Report |
-| Sun Zhengnan        | UI/UX Design, Report |
-| Lim Hong Jun Joshua | Backend Code, Report |
-| Lim Si Hui Brenda   | UI/UX Design, Poster |
+| Name                 | Contributions |
+|----------------------|---------------|
+| Lin Yutian           | Code, Report  |
+| Liu Renhang          | Code, Report  |
+| Meng Fanyi           | Code, Video   |
+| Lee Pei Xuan         | Code, Report  |
+| Sun Zhengnan         | Code, Report  |
+| Lim Hong Jun, Joshua | Code, Report  |
+| Lim Si Hui Brenda    | Code, Poster  |

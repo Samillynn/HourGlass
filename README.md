@@ -1,3 +1,6 @@
+# HourGlass - Time Management App
+50.001 Team 2-A
+### Table of Content
 [<u>Members</u>](#members)
 
 [<u>Description</u>](#description)
@@ -82,7 +85,7 @@ notification will be sent to remind the user to go back.
 The diagram demonstrates how the **three states** interact with each
 other.
 
-<img src="media/image1.png" style="width:6.26772in;height:4.19444in" />
+<img src="images/start_and_finish_rest.png"/>
 
 ***Implementation Details:***
 
@@ -96,7 +99,7 @@ both modes.
 
 After entering **WaitFocus** state, the user is ready to enter the focus
 mode. The user can set how long he/she wants to be focused by dragging
-the progress bar. The FocusActivity will started in the following 2
+the progress bar. The FocusActivity will start in the following 2
 situations:
 
 1.  The user presses the “START FOCUS” button.
@@ -109,7 +112,7 @@ situations:
 
 The following diagram describes how the user enters focus mode.
 
-<img src="media/image7.png" style="width:6.26772in;height:3.34722in" />
+<img src="images/enter_focus.png"/>
 
 #### **Stay in Focus Mode**
 
@@ -129,16 +132,16 @@ WhitelistChooserActivity scans the phone for installed apps to allow the
 user to choose their whitelisted apps. The diagram below shows how the
 user is able to choose the whitelisted apps.
 
-<img src="media/image4.png" style="width:5.36499in;height:2.93203in" />
+<img src="images/choose_whitelisted_apps.png"/>
 
 WhitelistActivity sets up the whitelist activity for users to choose
 their whitelisted apps.
 
-<img src="media/image5.png" style="width:5.61979in;height:3.60884in" />
+<img src="images/open_whitelisted_apps.png"/>
 
 The system architecture follows.
 
-<img src="media/image3.png" style="width:6.26772in;height:3.13889in" />
+<img src="images/whitelist_architecture.png"/>
 
 The timer is implemented using the Timer and TimerViewModel class. The
 former uses CountDownTimer to create the countdown sequence while the
@@ -155,13 +158,14 @@ will pop-up when they confirm to exit. If the user answers correctly,
 the FocusActivity exits. If not, the dialog closes and the user remains
 in Focus mode. The math question design aims to give our users a time
 buffer, so that they can think twice whether they really need to
-forcibly exit the focus mode. The diagram below shows
+forcibly exit the focus mode. The diagram below shows how the user can exit the focus mode.
 
-<img src="media/image6.png" style="width:6.26772in;height:3.375in" />
+
+<img src="images/exit_focus.png"/>
 
 The system architecture follows.
 
-<img src="media/image2.png" style="width:6.26772in;height:3.63889in" />
+<img src="images/exit_focus_architecture.png"/>
 
 ###  
 

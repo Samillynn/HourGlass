@@ -85,7 +85,8 @@ notification will be sent to remind the user to go back.
 The diagram demonstrates how the **three states** interact with each
 other.
 
-<img src="images/start_and_finish_rest.png"/>
+
+![start and finish rest](images/start_and_finish_rest.png?raw=true "start and finish rest")
 
 ***Implementation Details:***
 
@@ -112,7 +113,7 @@ situations:
 
 The following diagram describes how the user enters focus mode.
 
-<img src="images/enter_focus.png"/>
+![enter focus mode](images/enter_focus.png?raw=true "enter focus mode")
 
 #### **Stay in Focus Mode**
 
@@ -132,16 +133,18 @@ WhitelistChooserActivity scans the phone for installed apps to allow the
 user to choose their whitelisted apps. The diagram below shows how the
 user is able to choose the whitelisted apps.
 
-<img src="images/choose_whitelisted_apps.png"/>
+[//]: # (<img src="images/choose_whitelisted_apps.png"/>)
+![choose whitelisted apps](images/choose_whitelisted_apps.png?raw=true "enter focus mode")
 
 WhitelistActivity sets up the whitelist activity for users to choose
 their whitelisted apps.
 
-<img src="images/open_whitelisted_apps.png"/>
+![open whitelisted apps](images/open_whitelisted_apps.png?raw=true "open focus mode")
 
 The system architecture follows.
 
-<img src="images/whitelist_architecture.png"/>
+[//]: # (<img src="images/whitelist_architecture.png"/>)
+![whitelist architecture](images/whitelist_architecture.png?raw=true "whitelist architecture")
 
 The timer is implemented using the Timer and TimerViewModel class. The
 former uses CountDownTimer to create the countdown sequence while the
@@ -161,11 +164,12 @@ buffer, so that they can think twice whether they really need to
 forcibly exit the focus mode. The diagram below shows how the user can exit the focus mode.
 
 
-<img src="images/exit_focus.png"/>
+![exit focus](images/exit_focus.png?raw=true "exit focus")
 
 The system architecture follows.
 
-<img src="images/exit_focus_architecture.png"/>
+[//]: # (<img src="images/exit_focus_architecture.png"/>)
+![exit_focus_architecture](images/exit_focus_architecture.png?raw=true "exit focus architecture")
 
 ###  
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue"
-    tools:context=".FocusActivity">
+    tools:context=".focus_screen.FocusActivity">
 
 
     <!--rounded_corner is for the timer background-->
@@ -78,7 +78,7 @@
         app:srcCompat="@drawable/hourglass_logo_for_block_screen" />
 
     <!--To display the time segment-->
-    <com.example.myapplication.TimeSegment
+    <com.example.myapplication.ui_components.TimeSegment
         android:id="@+id/time_segment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

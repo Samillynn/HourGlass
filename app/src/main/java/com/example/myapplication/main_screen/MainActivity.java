@@ -1,9 +1,13 @@
 package com.example.myapplication.main_screen;
 
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -15,7 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplication.R;
-import com.example.myapplication.TimeSegment;
+import com.example.myapplication.ui_components.TimeSegment;
 import com.example.myapplication.focus_screen.FocusActivity;
 import com.example.myapplication.models.SharedData;
 import com.example.myapplication.models.TimeViewModel;
@@ -39,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        createNotificationChannel();
         getLifecycle().addObserver(new LifecycleLogger("Lifecycle", getClass().getName()));
 
         // inflate and initialize everything
@@ -101,6 +106,19 @@ public class MainActivity extends AppCompatActivity {
 
         settingButton = (ImageView) findViewById(R.id.setting_button);
         settingButton.setOnClickListener(view -> startActivity(new Intent(this, SettingsActivity.class)));
+    }
+
+    private void createNotificationChannel(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            CharSequence name = "MessageReminderChannel";
+            String description = "Channel for Reminder";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel("notifyUser", name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     /** After the "START FOCUS" button is pressed */

@@ -49,7 +49,7 @@
         app:layout_constraintVertical_bias="0.325" />
 
     <!-- To display the time segment -->
-    <com.example.myapplication.TimeSegment
+    <com.example.myapplication.ui_components.TimeSegment
         android:id="@+id/time_segment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
 
 
     <!-- To display the custom draggable progress bar -->
-    <com.example.myapplication.CircularSeekBar
+    <com.example.myapplication.ui_components.CircularSeekBar
         android:id="@+id/circular_seekbar"
         android:layout_width="313dp"
         android:layout_height="307dp"

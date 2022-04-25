@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.ui_components;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.example.myapplication.R;
 
 public class TimeSegment extends ConstraintLayout {
     TextView minutesView;

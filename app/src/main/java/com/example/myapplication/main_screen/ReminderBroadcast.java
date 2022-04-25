@@ -13,6 +13,7 @@ import com.example.myapplication.models.SharedData;
 
 public class ReminderBroadcast extends BroadcastReceiver{
 
+
     @Override
     public void onReceive(android.content.Context context, Intent intent) {
         //to go back to app after clicking on notification
@@ -23,7 +24,7 @@ public class ReminderBroadcast extends BroadcastReceiver{
                 PendingIntent.FLAG_CANCEL_CURRENT);
         //main code
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "notifyUser")
-                .setSmallIcon(R.drawable. ic_launcher_foreground)
+                .setSmallIcon(R.mipmap.ic_launcher_foreground)
                 .setAutoCancel(true) //for going back to app
                 .setContentIntent(contentIntent) //for going back to app
                 .setContentTitle("Reminder")

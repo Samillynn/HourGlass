@@ -21,7 +21,12 @@ public class ForceQuitFocusFragment extends DialogFragment {
         this.activityCallback = activityCallback;
     }
 
-
+    /**
+     * if the user has more chance(s) to forcibly exit,
+     *  then pop-up a math question for the user to confirm the exit
+     * otherwise
+     *  notify the user that he/she does not have any more chance to exit
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -32,6 +37,9 @@ public class ForceQuitFocusFragment extends DialogFragment {
         }
     }
 
+    /**
+     * create a dialog showing a math question
+     */
     private Dialog confirmQuitDialog() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext())
                 .setTitle("Force Quit")
@@ -50,6 +58,9 @@ public class ForceQuitFocusFragment extends DialogFragment {
         return dialogBuilder.create();
     }
 
+    /**
+     * notify the user that he/she does not have any chance to forcibly exit
+     */
     private Dialog noQuitChanceDialog() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext())
                 .setTitle("Force Quit")

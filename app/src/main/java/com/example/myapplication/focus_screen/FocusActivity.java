@@ -24,7 +24,9 @@ import com.example.myapplication.ui_components.TimeSegment;
 import com.example.myapplication.utils.Timer;
 
 public class FocusActivity extends AppCompatActivity {
-    private FocusLifeCycleObserver lifecycleObserver;
+    // use FocusLifeCycleObserver to make sure the user is not able exit from the focus mode
+    private final FocusLifeCycleObserver focus = new FocusLifeCycleObserver(this);
+
     private TimeSegment timeSegment;
     private TextView mMotivation;
     private Button mForceQuitButton;
@@ -37,39 +39,50 @@ public class FocusActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_focus);
         setResult(RESULT_OK);
+        initViews();
+        startTimer();
+    }
 
-        mForceQuitButton = findViewById(R.id.exit_button);
-        mForceQuitButton.setOnClickListener(view -> new ForceQuitFocusFragment(result -> {
-            if (result) {
-                lifecycleObserver.disable();
-                finish();
-            }
-        }).show(getSupportFragmentManager(), "Exit Focus"));
+    void initViews() {
+        initForceQuitButton();
+        initOpenAppButton();
+        initMotivationText();
+        initFocusLifecycleObserver();
+        initTimeSegment();
+    }
 
-
-        mOpenAppsButton = findViewById(R.id.open_app);        mOpenAppsButton.setOnClickListener(view -> {
-            lifecycleObserver.setUsingWhiteListApp(true);
-            startActivity(new Intent(this, WhitelistActivity.class));
-        });
-
-        mMotivation = findViewById(R.id.motivation);
-        mMotivation.setText(SharedData.getInstance().getMotivationMessage());
-
-
-        lifecycleObserver = new FocusLifeCycleObserver(this);
-        getLifecycle().addObserver(lifecycleObserver);
-        lifecycleObserver.enable();
-
-
-        mOpenAppsButton.setOnClickListener(view -> {
-            lifecycleObserver.setUsingWhiteListApp(true);
-            startActivity(new Intent(this, WhitelistActivity.class));
-        });
-
+    private void initTimeSegment() {
         timeSegment = findViewById(R.id.time_segment);
         timeViewModel = new ViewModelProvider(this).get(TimeViewModel.class);
         timeViewModel.getLeftTimeSecs().observe(this, t -> timeSegment.setTimeInSecs(t));
-        startTimer();
+    }
+
+    private void initMotivationText() {
+        mMotivation = findViewById(R.id.motivation);
+        mMotivation.setText(SharedData.getInstance().getMotivationMessage());
+    }
+
+    private void initFocusLifecycleObserver() {
+        getLifecycle().addObserver(focus);
+        focus.enable();
+    }
+
+    private void initForceQuitButton() {
+        mForceQuitButton = findViewById(R.id.exit_button);
+        mForceQuitButton.setOnClickListener(view -> new ForceQuitFocusFragment(result -> {
+            if (result) {
+                focus.disable();
+                finish();
+            }
+        }).show(getSupportFragmentManager(), "Exit Focus"));
+    }
+
+    private void initOpenAppButton() {
+        mOpenAppsButton = findViewById(R.id.open_app);
+        mOpenAppsButton.setOnClickListener(view -> {
+            focus.setUsingWhiteListApp(true);
+            startActivity(new Intent(this, WhitelistActivity.class));
+        });
     }
 
     void startTimer() {
@@ -80,7 +93,7 @@ public class FocusActivity extends AppCompatActivity {
             Log.i("TimeSegment", ""+t);
         });
         timer.setOnFinish(() -> {
-                lifecycleObserver.disable();
+                focus.disable();
                 finish();
         });
         timer.start();
